@@ -1,0 +1,83 @@
+name: Update prices
+
+on:
+  schedule:
+    # UTC, weekdays: morning, midday, after the EU close, after the US close.
+    - cron: "15 9,13,17,21 * * 1-5"
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # full history and the game/* tags
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Check closed games against their tags
+        run: python scripts/check_frozen.py
+
+      - name: Fetch prices and close finished games
+        run: python scripts/update.py
+
+      - name: Check that no closed game was changed
+        run: python scripts/check_frozen.py --base HEAD
+
+      - name: Commit, push and tag closed games
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add games
+          if ! git diff --cached --quiet; then
+            git commit -q -m "Update prices"
+            git pull -q --rebase
+            git push -q
+          fi
+          for result in games/*/result.json; do
+            [ -e "$result" ] || continue
+            id=$(basename "$(dirname "$result")")
+            if ! git rev-parse -q --verify "refs/tags/game/$id" > /dev/null; then
+              git tag "game/$id"
+              git push -q origin "refs/tags/game/$id"
+              echo "Tagged game/$id"
+            fi
+          done
+
+      - name: Assemble site
+        run: |
+          mkdir _site
+          cp -r site/. _site/
+          cp -r games _site/games
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: update
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

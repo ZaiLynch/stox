@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stox</title>
+  <meta name="description" content="Quarterly stock-picking game: the worst pick pays for pizza.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍕</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Stox <span aria-hidden="true">🍕</span></h1>
+      <label class="picker">
+        <span class="visually-hidden">Game</span>
+        <select id="game" disabled></select>
+      </label>
+    </header>
+
+    <p id="message" class="message" hidden></p>
+
+    <section id="game-view" hidden>
+      <p class="summary">
+        <span id="status" class="status"></span>
+        <span id="dates"></span>
+        <span id="updated" class="muted"></span>
+      </p>
+
+      <div id="chart-wrap" class="chart-wrap">
+        <canvas id="chart" role="img" aria-label="Value of each pick over time in EUR"></canvas>
+        <div id="tooltip" class="tooltip" hidden></div>
+      </div>
+
+      <table class="standings">
+        <thead>
+          <tr><th>#</th><th>Player</th><th>Stock</th><th class="num">Value</th><th class="num">Change</th><th></th></tr>
+        </thead>
+        <tbody id="standings"></tbody>
+      </table>
+      <p id="checksum" class="muted small" hidden></p>
+    </section>
+
+    <section class="shame">
+      <h2>Hall of shame</h2>
+      <ol id="shame"></ol>
+    </section>
+
+    <footer class="muted small">
+      Every player invests 50&nbsp;EUR at the closing price of the last trading day before the start.
+      The lowest value at the closing price of the last trading day pays for pizza and drinks.
+      Values in EUR at ECB rates; dividends count as cash. Prices from Yahoo Finance.
+    </footer>
+  </main>
+</body>
+</html>
