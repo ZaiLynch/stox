@@ -1,3 +1,51 @@
 {
- "games": []
+ "games": [
+  {
+   "id": "2026-Q4",
+   "start": "2026-10-01",
+   "end": "2027-03-31",
+   "status": "running",
+   "invested_eur": 50,
+   "picks": [
+    {
+     "player": "a",
+     "ticker": "TJX.F",
+     "name": "TJX Companies"
+    },
+    {
+     "player": "b",
+     "ticker": "LOT.F",
+     "name": "GE HealthCare Technologies"
+    },
+    {
+     "player": "c",
+     "ticker": "NTO.F",
+     "name": "Nintendo"
+    },
+    {
+     "player": "d",
+     "ticker": "JPM",
+     "name": "JPMorgan Chase"
+    }
+   ],
+   "standings": [
+    {
+     "player": "a",
+     "value": 55.98
+    },
+    {
+     "player": "c",
+     "value": 52.99
+    },
+    {
+     "player": "d",
+     "value": 51.25
+    }
+   ],
+   "last": [
+    "d"
+   ],
+   "updated": "2026-10-19T23:10:38Z"
+  }
+ ]
 }
