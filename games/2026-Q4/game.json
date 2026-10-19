@@ -1,0 +1,13 @@
+{
+  "id": "2026-Q4",
+  "start": "2026-10-01",
+  "end": "2027-03-31",
+  "invested_eur": 50,
+  "picks": [
+    {"player": "a", "ticker": "TJX.F", "name": "TJX Companies"},
+    {"player": "b", "ticker": "LOT.F", "name": "GE HealthCare Technologies"},
+    {"player": "c", "ticker": "NTO.F", "name": "Nintendo"},
+    {"player": "d", "ticker": "JPM", "name": "JPMorgan Chase"}
+  ]
+}
+
