@@ -8,44 +8,44 @@
    "invested_eur": 50,
    "picks": [
     {
-     "player": "a",
+     "player": "s",
      "ticker": "TJX.F",
      "name": "TJX Companies"
     },
     {
-     "player": "b",
-     "ticker": "LOT.F",
+     "player": "j",
+     "ticker": "LOT.DU",
      "name": "GE HealthCare Technologies"
     },
     {
-     "player": "c",
+     "player": "a",
      "ticker": "NTO.F",
      "name": "Nintendo"
     },
     {
-     "player": "d",
+     "player": "h",
      "ticker": "JPM",
      "name": "JPMorgan Chase"
     }
    ],
    "standings": [
     {
-     "player": "a",
+     "player": "s",
      "value": 55.98
     },
     {
-     "player": "c",
-     "value": 54.21
+     "player": "a",
+     "value": 53.9
     },
     {
-     "player": "d",
-     "value": 52.1
+     "player": "h",
+     "value": 51.72
     }
    ],
    "last": [
-    "d"
+    "h"
    ],
-   "updated": "2026-10-20T14:41:57Z"
+   "updated": "2026-10-20T15:47:14Z"
   }
  ]
 }
