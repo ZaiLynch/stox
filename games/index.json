@@ -14,7 +14,7 @@
     },
     {
      "player": "b",
-     "ticker": "LOT.DU",
+     "ticker": "LOT.F",
      "name": "GE HealthCare Technologies"
     },
     {
@@ -35,17 +35,17 @@
     },
     {
      "player": "c",
-     "value": 54.54
+     "value": 54.21
     },
     {
      "player": "d",
-     "value": 51.91
+     "value": 52.1
     }
    ],
    "last": [
     "d"
    ],
-   "updated": "2026-10-20T14:20:32Z"
+   "updated": "2026-10-20T14:41:57Z"
   }
  ]
 }
