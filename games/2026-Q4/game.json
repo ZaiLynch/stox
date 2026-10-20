@@ -4,10 +4,10 @@
   "end": "2027-03-31",
   "invested_eur": 50,
   "picks": [
-    {"player": "a", "ticker": "TJX.F", "name": "TJX Companies"},
-    {"player": "b", "ticker": "LOT.F", "name": "GE HealthCare Technologies"},
-    {"player": "c", "ticker": "NTO.F", "name": "Nintendo"},
-    {"player": "d", "ticker": "JPM", "name": "JPMorgan Chase"}
+    {"player": "s", "ticker": "TJX.F", "name": "TJX Companies"},
+    {"player": "j", "ticker": "LOT.DU", "name": "GE HealthCare Technologies"},
+    {"player": "a", "ticker": "NTO.F", "name": "Nintendo"},
+    {"player": "h", "ticker": "JPM", "name": "JPMorgan Chase"}
   ]
 }
 
