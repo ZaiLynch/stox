@@ -5,7 +5,7 @@
   "invested_eur": 50,
   "picks": [
     {"player": "s", "ticker": "TJX.F", "name": "TJX Companies"},
-    {"player": "j", "ticker": "LOT.DU", "name": "GE HealthCare Technologies"},
+    {"player": "j", "ticker": "L0T.DE", "name": "GE HealthCare Technologies"},
     {"player": "a", "ticker": "NTO.F", "name": "Nintendo"},
     {"player": "h", "ticker": "JPM", "name": "JPMorgan Chase"}
   ]
