@@ -1,0 +1,12 @@
+{
+  "id": "2026-Q3",
+  "start": "2026-07-01",
+  "end": "2026-09-30",
+  "invested_eur": 50,
+  "picks": [
+    {"player": "a", "ticker": "UN0.DE", "name": "Uniper"},
+    {"player": "h", "ticker": "PRG.DE", "name": "Procter & Gamble"},
+    {"player": "j", "ticker": "AMG.DE", "name": "Amgen"},
+    {"player": "s", "ticker": "HNR1.DE", "name": "Hannover Rück"}
+  ]
+}

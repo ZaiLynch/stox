@@ -1,0 +1,12 @@
+{
+  "id": "2025-Q2",
+  "start": "2025-04-01",
+  "end": "2025-06-30",
+  "invested_eur": 50,
+  "picks": [
+    {"player": "a", "ticker": "ASME.DE", "name": "ASML"},
+    {"player": "h", "ticker": "PEN.AX", "name": "Peninsula Energy"},
+    {"player": "j", "ticker": "BTQ.NE", "name": "BTQ Technologies"},
+    {"player": "s", "ticker": "SYSR.ST", "name": "Systemair"}
+  ]
+}

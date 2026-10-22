@@ -1,0 +1,12 @@
+{
+  "id": "2026-Q2",
+  "start": "2026-04-01",
+  "end": "2026-06-30",
+  "invested_eur": 50,
+  "picks": [
+    {"player": "a", "ticker": "HLAG.DE", "name": "Hapag-Lloyd"},
+    {"player": "h", "ticker": "EVD.DE", "name": "CTS Eventim"},
+    {"player": "j", "ticker": "CLH", "name": "Clean Harbors"},
+    {"player": "s", "ticker": "MSF.DE", "name": "Microsoft"}
+  ]
+}

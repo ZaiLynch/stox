@@ -1,0 +1,12 @@
+{
+  "id": "2025-Q4",
+  "start": "2025-10-01",
+  "end": "2025-12-31",
+  "invested_eur": 50,
+  "picks": [
+    {"player": "a", "ticker": "I1V.F", "name": "CoreWeave"},
+    {"player": "h", "ticker": "9684.T", "name": "Square Enix"},
+    {"player": "j", "ticker": "HAG.DE", "name": "Hensoldt"},
+    {"player": "s", "ticker": "UWS.DE", "name": "Waste Management"}
+  ]
+}

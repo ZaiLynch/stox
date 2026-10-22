@@ -1,0 +1,12 @@
+{
+  "id": "2026-Q1",
+  "start": "2026-01-01",
+  "end": "2026-03-31",
+  "invested_eur": 50,
+  "picks": [
+    {"player": "a", "ticker": "TKMS.DE", "name": "TKMS"},
+    {"player": "h", "ticker": "8XPA.F", "name": "XPeng"},
+    {"player": "j", "ticker": "SIE.DE", "name": "Siemens"},
+    {"player": "s", "ticker": "HON", "name": "Honeywell International"}
+  ]
+}

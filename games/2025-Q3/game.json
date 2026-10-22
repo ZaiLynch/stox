@@ -1,0 +1,12 @@
+{
+  "id": "2025-Q3",
+  "start": "2025-07-01",
+  "end": "2025-09-30",
+  "invested_eur": 50,
+  "picks": [
+    {"player": "a", "ticker": "F3M.F", "name": "Tempus AI"},
+    {"player": "h", "ticker": "GTLB", "name": "GitLab"},
+    {"player": "j", "ticker": "PUM.DE", "name": "PUMA"},
+    {"player": "s", "ticker": "HDI.DE", "name": "Home Depot"}
+  ]
+}
