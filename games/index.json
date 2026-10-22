@@ -31,15 +31,15 @@
    "standings": [
     {
      "player": "s",
-     "value": 56.2
+     "value": 55.13
     },
     {
      "player": "a",
-     "value": 55.08
+     "value": 54.54
     },
     {
      "player": "j",
-     "value": 53.33
+     "value": 52.99
     },
     {
      "player": "h",
@@ -49,7 +49,313 @@
    "last": [
     "h"
    ],
-   "updated": "2026-10-22T00:01:38Z"
+   "updated": "2026-10-22T11:56:32Z"
+  },
+  {
+   "id": "2026-Q3",
+   "start": "2026-07-01",
+   "end": "2026-09-30",
+   "status": "closed",
+   "invested_eur": 50,
+   "picks": [
+    {
+     "player": "a",
+     "ticker": "UN0.DE",
+     "name": "Uniper"
+    },
+    {
+     "player": "h",
+     "ticker": "PRG.DE",
+     "name": "Procter & Gamble"
+    },
+    {
+     "player": "j",
+     "ticker": "AMG.DE",
+     "name": "Amgen"
+    },
+    {
+     "player": "s",
+     "ticker": "HNR1.DE",
+     "name": "Hannover Rück"
+    }
+   ],
+   "standings": [
+    {
+     "player": "j",
+     "value": 59.69
+    },
+    {
+     "player": "a",
+     "value": 58.32
+    },
+    {
+     "player": "s",
+     "value": 52.06
+    },
+    {
+     "player": "h",
+     "value": 51.27
+    }
+   ],
+   "losers": [
+    "h"
+   ],
+   "checksum": "5312925428f1b48d089d828e72b7af515f0aef997ef949204783b783972b05b9"
+  },
+  {
+   "id": "2026-Q2",
+   "start": "2026-04-01",
+   "end": "2026-06-30",
+   "status": "closed",
+   "invested_eur": 50,
+   "picks": [
+    {
+     "player": "a",
+     "ticker": "HLAG.DE",
+     "name": "Hapag-Lloyd"
+    },
+    {
+     "player": "h",
+     "ticker": "EVD.DE",
+     "name": "CTS Eventim"
+    },
+    {
+     "player": "j",
+     "ticker": "CLH",
+     "name": "Clean Harbors"
+    },
+    {
+     "player": "s",
+     "ticker": "MSF.DE",
+     "name": "Microsoft"
+    }
+   ],
+   "standings": [
+    {
+     "player": "h",
+     "value": 52.85
+    },
+    {
+     "player": "j",
+     "value": 52.57
+    },
+    {
+     "player": "s",
+     "value": 51.24
+    },
+    {
+     "player": "a",
+     "value": 47.43
+    }
+   ],
+   "losers": [
+    "a"
+   ],
+   "checksum": "a7f20f3c892a63566026407c6e6c4aa50301cd0c7587285d799802b871fbed7c"
+  },
+  {
+   "id": "2026-Q1",
+   "start": "2026-01-01",
+   "end": "2026-03-31",
+   "status": "closed",
+   "invested_eur": 50,
+   "picks": [
+    {
+     "player": "a",
+     "ticker": "TKMS.DE",
+     "name": "TKMS"
+    },
+    {
+     "player": "h",
+     "ticker": "8XPA.F",
+     "name": "XPeng"
+    },
+    {
+     "player": "j",
+     "ticker": "SIE.DE",
+     "name": "Siemens"
+    },
+    {
+     "player": "s",
+     "ticker": "HON",
+     "name": "Honeywell International"
+    }
+   ],
+   "standings": [
+    {
+     "player": "s",
+     "value": 59.51
+    },
+    {
+     "player": "a",
+     "value": 59.46
+    },
+    {
+     "player": "j",
+     "value": 44.12
+    },
+    {
+     "player": "h",
+     "value": 41.37
+    }
+   ],
+   "losers": [
+    "h"
+   ],
+   "checksum": "36e13860b504da1dd851074ca21453d645fb7d6bf2b62248c701e93c1b0cf4e0"
+  },
+  {
+   "id": "2025-Q4",
+   "start": "2025-10-01",
+   "end": "2025-12-31",
+   "status": "closed",
+   "invested_eur": 50,
+   "picks": [
+    {
+     "player": "a",
+     "ticker": "I1V.F",
+     "name": "CoreWeave"
+    },
+    {
+     "player": "h",
+     "ticker": "9684.T",
+     "name": "Square Enix"
+    },
+    {
+     "player": "j",
+     "ticker": "HAG.DE",
+     "name": "Hensoldt"
+    },
+    {
+     "player": "s",
+     "ticker": "UWS.DE",
+     "name": "Waste Management"
+    }
+   ],
+   "standings": [
+    {
+     "player": "s",
+     "value": 50.52
+    },
+    {
+     "player": "h",
+     "value": 42.51
+    },
+    {
+     "player": "j",
+     "value": 33.27
+    },
+    {
+     "player": "a",
+     "value": 26.78
+    }
+   ],
+   "losers": [
+    "a"
+   ],
+   "checksum": "3c0a6cc446f541340f9dee329b62b335aedb19d550de53b553496da26ca4f72c"
+  },
+  {
+   "id": "2025-Q3",
+   "start": "2025-07-01",
+   "end": "2025-09-30",
+   "status": "closed",
+   "invested_eur": 50,
+   "picks": [
+    {
+     "player": "a",
+     "ticker": "F3M.F",
+     "name": "Tempus AI"
+    },
+    {
+     "player": "h",
+     "ticker": "GTLB",
+     "name": "GitLab"
+    },
+    {
+     "player": "j",
+     "ticker": "PUM.DE",
+     "name": "PUMA"
+    },
+    {
+     "player": "s",
+     "ticker": "HDI.DE",
+     "name": "Home Depot"
+    }
+   ],
+   "standings": [
+    {
+     "player": "a",
+     "value": 60.35
+    },
+    {
+     "player": "s",
+     "value": 55.65
+    },
+    {
+     "player": "h",
+     "value": 49.88
+    },
+    {
+     "player": "j",
+     "value": 45.64
+    }
+   ],
+   "losers": [
+    "j"
+   ],
+   "checksum": "f220fb648d427f4340f73559c5521dd0b41c6d6b4fe1fac67f93bdedf6ea5814"
+  },
+  {
+   "id": "2025-Q2",
+   "start": "2025-04-01",
+   "end": "2025-06-30",
+   "status": "closed",
+   "invested_eur": 50,
+   "picks": [
+    {
+     "player": "a",
+     "ticker": "ASME.DE",
+     "name": "ASML"
+    },
+    {
+     "player": "h",
+     "ticker": "PEN.AX",
+     "name": "Peninsula Energy"
+    },
+    {
+     "player": "j",
+     "ticker": "BTQ.NE",
+     "name": "BTQ Technologies"
+    },
+    {
+     "player": "s",
+     "ticker": "SYSR.ST",
+     "name": "Systemair"
+    }
+   ],
+   "standings": [
+    {
+     "player": "j",
+     "value": 139.81
+    },
+    {
+     "player": "s",
+     "value": 57.65
+    },
+    {
+     "player": "a",
+     "value": 56.25
+    },
+    {
+     "player": "h",
+     "value": 41.84
+    }
+   ],
+   "losers": [
+    "h"
+   ],
+   "checksum": "9f461038ebd1d4aa2e709b2e3ad8e6f9efb88d2337287eefda4fefe61b77c642"
   }
  ]
 }

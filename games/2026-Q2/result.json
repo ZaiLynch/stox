@@ -1,0 +1,26 @@
+{
+ "id": "2026-Q2",
+ "closed_at": "2026-10-22T11:56:32Z",
+ "script_version": "1",
+ "standings": [
+  {
+   "player": "h",
+   "value": 52.85
+  },
+  {
+   "player": "j",
+   "value": 52.57
+  },
+  {
+   "player": "s",
+   "value": 51.24
+  },
+  {
+   "player": "a",
+   "value": 47.43
+  }
+ ],
+ "losers": [
+  "a"
+ ]
+}
