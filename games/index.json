@@ -35,21 +35,21 @@
     },
     {
      "player": "s",
-     "value": 54.27
-    },
-    {
-     "player": "a",
-     "value": 53.42
+     "value": 53.63
     },
     {
      "player": "h",
-     "value": 52.28
+     "value": 52.04
+    },
+    {
+     "player": "a",
+     "value": 51.42
     }
    ],
    "last": [
-    "h"
+    "a"
    ],
-   "updated": "2026-10-30T15:58:05Z"
+   "updated": "2026-10-30T21:31:43Z"
   },
   {
    "id": "2026-Q3",
