@@ -116,28 +116,47 @@ def iso(ts: dt.datetime) -> str:
     return ts.astimezone(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def compute_pick(quote: Quote, rates, game: dict, now: dt.datetime, final: bool) -> dict:
+def compute_pick(quote: Quote, rates, game: dict, now: dt.datetime, final: bool, stored: dict | None = None) -> dict:
     """EUR value series of one pick.
 
     The reference is the close of the last trading day before the start. Dividends
     with an ex-date during the game count as cash. With `final`, the series ends on
     the official close of the last trading day on or before the end.
+
+    `stored` is this pick's entry from the previous prices.json. It is only used when
+    the quote no longer reaches back before the start (Yahoo sometimes drops a
+    ticker's history): then the stored reference, and the stored dividends and series
+    points from before the first fetched data, stand in for what was lost.
     """
     start, end = game["start"], game["end"]
     invested = game["invested_eur"]
     ref = last_before(quote.daily, start)
-    if ref is None:
+    kept_divs, kept_points = [], []
+    if ref is None and stored:
+        r = stored["reference"]
+        ref_day, p0, fx0 = dt.date.fromisoformat(r["date"]), r["close"], r["eur_rate"]
+        # Everything before the first fetched data point comes from the stored data.
+        firsts = [dt.datetime.combine(d, dt.time(), dt.timezone.utc) for d, _ in quote.daily[:1]]
+        firsts += [ts for ts, _, _ in quote.hourly[:1]]
+        cutoff = min(firsts)
+        kept_divs = [(dt.date.fromisoformat(d), a) for d, a in stored["dividends"] if dt.date.fromisoformat(d) < cutoff.date()]
+        kept_points = [[t, v] for t, v in stored["series"][1:] if dt.datetime.fromisoformat(t) < cutoff]
+        log.warning("%s: history before %s is missing, using the stored reference of %s",
+                    game["id"], cutoff.date(), ref_day)
+    elif ref is None:
         raise LookupError(f"no closing price before {start}")
-    ref_day, p0 = ref
-    fx0 = eur_rate(rates, ref_day)
-    divs = [(d, a) for d, a in quote.dividends if start <= d <= end]
+    else:
+        ref_day, p0 = ref
+        fx0 = eur_rate(rates, ref_day)
+    fetched_divs = [(d, a) for d, a in quote.dividends if start <= d <= end]
+    divs = sorted(kept_divs + [x for x in fetched_divs if x[0] not in {d for d, _ in kept_divs}])
 
     def value(day, price):
         cash = sum(a for d, a in divs if d <= day)
         return round(invested * (price + cash) * eur_rate(rates, day) / (p0 * fx0), 4)
 
     start_ts = dt.datetime.combine(start, dt.time(), dt.timezone.utc)
-    series = [[iso(start_ts), float(invested)]]
+    series = [[iso(start_ts), float(invested)], *kept_points]
     last_day = None
     for ts, day, close in quote.hourly:
         if start <= day <= end and ts <= now:
@@ -245,7 +264,8 @@ def update_game(folder: Path, game: dict, now: dt.datetime, get_quote=fetch_quot
             currency = MINOR_CURRENCIES.get(quote.currency, quote.currency)
             if currency not in fx_cache:
                 fx_cache[currency] = None if currency == "EUR" else get_fx(currency, since, until)
-            picks[player] = {"ticker": ticker, **compute_pick(quote, fx_cache[currency], game, now, final)}
+            stored = old[player] if old.get(player, {}).get("ticker") == ticker else None
+            picks[player] = {"ticker": ticker, **compute_pick(quote, fx_cache[currency], game, now, final, stored)}
         except Exception as e:  # keep the last good data, try again next run
             log.warning("%s: %s (%s): %r", game["id"], player, ticker, e)
             failed.append(player)

@@ -124,6 +124,35 @@ def test_failed_ticker_keeps_old_data_and_delays_closing(games, monkeypatch):
     assert not (games / GAME["id"] / "result.json").exists()
 
 
+def test_lost_history_uses_stored_reference(games, monkeypatch):
+    run(games, dt.datetime(2026, 2, 15, 12, tzinfo=UTC))
+    old_alice = read(games, "prices.json")["picks"]["Alice"]
+    # Yahoo drops everything before March: reference close, January bars and the dividend.
+    truncated = Quote(
+        currency="EUR",
+        daily=[(D(2026, 3, 2), 106.0), (D(2026, 3, 31), 109.0)],
+        hourly=[hourly(D(2026, 3, 2), 9, 105.0), hourly(D(2026, 3, 31), 15, 108.0)],
+        dividends=[],
+    )
+    monkeypatch.setitem(QUOTES, "AAA.DE", truncated)
+    assert run(games, dt.datetime(2026, 4, 1, 9, tzinfo=UTC)) == "closed"
+    alice = read(games, "prices.json")["picks"]["Alice"]
+    assert alice["reference"] == old_alice["reference"]
+    assert alice["dividends"] == [["2026-02-01", 1.0]]
+    # The stored January points are kept, then the new bars; (109 + 1) / 100 * 50 at the end.
+    assert alice["series"][:3] == old_alice["series"]
+    assert alice["series"][3:] == [["2026-03-02T09:00:00Z", 53.0], ["2026-03-31T15:00:00Z", 55.0]]
+    assert read(games, "result.json")["standings"][0] == {"player": "Alice", "value": 55.0}
+
+
+def test_lost_history_without_stored_data_fails(games, monkeypatch):
+    truncated = Quote(currency="EUR", daily=[(D(2026, 3, 2), 106.0)], hourly=[], dividends=[])
+    monkeypatch.setitem(QUOTES, "AAA.DE", truncated)
+    run(games, dt.datetime(2026, 4, 1, 9, tzinfo=UTC))
+    assert "Alice" not in read(games, "prices.json")["picks"]
+    assert not (games / GAME["id"] / "result.json").exists()
+
+
 def test_rank_ties_share_the_bill():
     standings, losers = update.rank({"A": 48.001, "B": 47.996, "C": 60.0})
     assert losers == ["A", "B"]
