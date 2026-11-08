@@ -113,6 +113,22 @@ select {
   font-size: 14px;
 }
 
+.segmented {
+  display: inline-flex;
+  margin-left: auto;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+  font-size: 14px;
+}
+.segmented[hidden] { display: none; }
+.segmented input { position: absolute; opacity: 0; pointer-events: none; }
+.segmented span { display: block; padding: 2px 12px; cursor: pointer; color: var(--text-secondary); }
+.segmented input:checked + span { background: var(--text-primary); color: var(--surface); }
+.segmented input:focus-visible + span { outline: 2px solid var(--series-1); outline-offset: -2px; }
+
+#view-note { margin: 0 0 8px; }
+
 .muted { color: var(--text-muted); }
 .small { font-size: 13px; }
 .message { color: var(--text-secondary); margin-top: 24px; }

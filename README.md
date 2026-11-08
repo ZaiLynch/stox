@@ -33,6 +33,20 @@ The folder name must equal `id`. Tickers are Yahoo Finance symbols: look the sto
 }
 ```
 
+### Custom View (optional)
+
+Trading apps show a different buy-in price than the official Yahoo close (other time,
+other exchange, fees). To compare with that, add `buy_eur` (EUR per share, as shown in
+your app) to **every** pick:
+
+```json
+{"player": "Alice", "ticker": "SAP.DE", "name": "SAP", "buy_eur": 231.85}
+```
+
+The site then offers a *Custom View* next to the default *Yahoo View*. It is unofficial:
+the Yahoo View decides who pays. `buy_eur` can be added to a running game, but not to a
+closed one (closed games are frozen).
+
 Committing it starts the update workflow. Prices appear from the start date on.
 Keep player names identical across games: the hall of shame and the colors go by name.
 

@@ -28,6 +28,13 @@
         <span id="status" class="status"></span>
         <span id="dates"></span>
         <span id="updated" class="muted"></span>
+        <span id="view-toggle" class="segmented" role="radiogroup" aria-label="Buy-in prices" hidden>
+          <label><input type="radio" name="view" value="yahoo" checked><span>Yahoo View</span></label>
+          <label><input type="radio" name="view" value="custom"><span>Custom View</span></label>
+        </span>
+      </p>
+      <p id="view-note" class="muted small" hidden>
+        Custom View: buy-in prices from your trading apps. Unofficial – the Yahoo View decides who pays.
       </p>
 
       <div id="chart-wrap" class="chart-wrap">

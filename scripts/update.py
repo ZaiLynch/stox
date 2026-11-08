@@ -171,9 +171,11 @@ def compute_pick(quote: Quote, rates, game: dict, now: dt.datetime, final: bool,
         elif close_day >= start:
             series.append([iso(dt.datetime.combine(close_day, CLOSE_FALLBACK_UTC, dt.timezone.utc)), final_value])
 
+    # EUR per share at the reference, in major units (Yahoo quotes some exchanges in pence etc.).
+    close_eur = round(p0 * fx0 / (100 if quote.currency in MINOR_CURRENCIES else 1), 6)
     return {
         "currency": quote.currency,
-        "reference": {"date": ref_day.isoformat(), "close": p0, "eur_rate": fx0},
+        "reference": {"date": ref_day.isoformat(), "close": p0, "eur_rate": fx0, "close_eur": close_eur},
         "dividends": [[d.isoformat(), a] for d, a in divs],
         "value": series[-1][1],
         "series": series,
@@ -233,6 +235,12 @@ def load_game(folder: Path) -> dict:
         raise GameError(f"{folder.name}: every pick needs a player and a ticker")
     if len({p["player"] for p in picks}) != len(picks):
         raise GameError(f"{folder.name}: a player appears twice")
+    custom = [p.get("buy_eur") for p in picks]
+    if any(c is not None for c in custom):
+        if any(c is None for c in custom):
+            raise GameError(f"{folder.name}: buy_eur must be set for all picks or none")
+        if any(isinstance(c, bool) or not isinstance(c, (int, float)) or c <= 0 for c in custom):
+            raise GameError(f"{folder.name}: buy_eur must be a positive number")
     return game
 
 

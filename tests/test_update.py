@@ -85,7 +85,8 @@ def test_running_game_values(games):
     assert run(games, dt.datetime(2026, 2, 15, 12, tzinfo=UTC)) == "running"
     picks = read(games, "prices.json")["picks"]
     alice = picks["Alice"]
-    assert alice["reference"] == {"date": "2025-12-30", "close": 100.0, "eur_rate": 1.0}
+    assert alice["reference"] == {"date": "2025-12-30", "close": 100.0, "eur_rate": 1.0, "close_eur": 100.0}
+    assert picks["Bob"]["reference"]["close_eur"] == 18.0  # 20 USD * 0.90
     assert alice["series"][0] == ["2026-01-01T00:00:00Z", 50.0]
     # Dividend before the start is ignored; the one on 2026-02-01 is not reached by Jan 2.
     assert [v for _, v in alice["series"][1:]] == [51.0, 52.0]
@@ -153,6 +154,22 @@ def test_lost_history_without_stored_data_fails(games, monkeypatch):
     assert not (games / GAME["id"] / "result.json").exists()
 
 
+def test_minor_currency_close_eur_in_major_units():
+    quote = Quote(currency="GBp", daily=[(D(2025, 12, 31), 250.0)], hourly=[], dividends=[])
+    game = {**GAME, "start": D(2026, 1, 1), "end": D(2026, 3, 31)}
+    gbp_eur = [(D(2025, 12, 31), 1.2)]
+    pick = update.compute_pick(quote, gbp_eur, game, dt.datetime(2026, 1, 1, 12, tzinfo=UTC), final=False)
+    assert pick["reference"]["close_eur"] == 3.0  # 250 pence = 2.50 GBP * 1.2
+
+
+def test_valid_buy_eur(tmp_path):
+    folder = tmp_path / GAME["id"]
+    folder.mkdir()
+    picks = [{**p, "buy_eur": 10} for p in GAME["picks"]]
+    (folder / "game.json").write_text(json.dumps({**GAME, "picks": picks}))
+    assert [p["buy_eur"] for p in update.load_game(folder)["picks"]] == [10, 10]
+
+
 def test_rank_ties_share_the_bill():
     standings, losers = update.rank({"A": 48.001, "B": 47.996, "C": 60.0})
     assert losers == ["A", "B"]
@@ -165,6 +182,9 @@ def test_rank_ties_share_the_bill():
     ({"invested_eur": 0}, "positive"),
     ({"picks": [{"player": "A", "ticker": "X"}, {"player": "A", "ticker": "Y"}]}, "twice"),
     ({"picks": [{"player": "A"}]}, "ticker"),
+    ({"picks": [{"player": "A", "ticker": "X", "buy_eur": 0}]}, "positive"),
+    ({"picks": [{"player": "A", "ticker": "X", "buy_eur": "12"}]}, "positive"),
+    ({"picks": [{"player": "A", "ticker": "X", "buy_eur": 12.5}, {"player": "B", "ticker": "Y"}]}, "all picks or none"),
 ])
 def test_invalid_game(tmp_path, change, message):
     folder = tmp_path / GAME["id"]

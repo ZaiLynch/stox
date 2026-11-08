@@ -12,6 +12,7 @@ let index = [];
 let colorOf = new Map(); // player -> series slot, stable across all games
 let chart = null;
 let current = null; // {game, prices, result}
+let view = "yahoo"; // "yahoo" (official) or "custom" (buy-in prices from game.json)
 
 async function getJson(path) {
   const resp = await fetch(path, { cache: "no-cache" });
@@ -103,9 +104,28 @@ async function loadGame(id) {
   renderGame();
 }
 
+// player -> factor turning the Yahoo value into the value at the custom buy-in price,
+// or null when the game has no complete set of custom prices.
+function customFactors() {
+  const { game, prices } = current;
+  if (!prices) return null;
+  const factors = new Map();
+  for (const p of game.picks) {
+    const ref = prices.picks[p.player]?.reference?.close_eur;
+    if (!(p.buy_eur > 0) || !(ref > 0)) return null;
+    factors.set(p.player, ref / p.buy_eur);
+  }
+  return factors;
+}
+
 function renderGame() {
   const { entry, game, prices, result } = current;
   $("game-view").hidden = false;
+  current.factors = customFactors();
+  if (!current.factors) view = "yahoo";
+  $("view-toggle").hidden = !current.factors;
+  for (const input of $("view-toggle").querySelectorAll("input")) input.checked = input.value === view;
+  $("view-note").hidden = view !== "custom";
   const icon = { running: "●", finished: "●", upcoming: "◷", closed: "✓" }[entry.status];
   const label = entry.status === "finished" ? "waiting for final prices" : entry.status;
   $("status").textContent = `${icon} ${label}`;
@@ -124,19 +144,32 @@ function renderGame() {
 }
 
 function renderTable() {
-  const { entry, game, prices, result } = current;
-  const values = new Map(game.picks.map((p) => [p.player, prices?.picks[p.player]?.value ?? null]));
-  if (result) for (const s of result.standings) values.set(s.player, s.value);
-  const losers = new Set(result ? result.losers : entry.last ?? []);
+  const { entry, game, prices, result, factors } = current;
+  const custom = view === "custom";
+  const values = new Map(game.picks.map((p) => {
+    const v = prices?.picks[p.player]?.value ?? null;
+    return [p.player, v != null && custom ? v * factors.get(p.player) : v];
+  }));
+  if (result && !custom) for (const s of result.standings) values.set(s.player, s.value);
+  let losers;
+  if (custom) {
+    // Same rule as the official ranking: everyone tied for last, to the cent.
+    const cents = [...values.values()].filter((v) => v != null).map((v) => Math.round(v * 100));
+    const worst = Math.min(...cents);
+    losers = new Set([...values].filter(([, v]) => v != null && Math.round(v * 100) === worst).map(([p]) => p));
+  } else {
+    losers = new Set(result ? result.losers : entry.last ?? []);
+  }
   const rows = game.picks.slice().sort((a, b) => (values.get(b.player) ?? -Infinity) - (values.get(a.player) ?? -Infinity));
 
   $("standings").replaceChildren(...rows.map((p, i) => {
     const v = values.get(p.player);
-    const pizza = losers.has(p.player) ? (result ? "🍕 paid" : "🍕 pays now") : "";
+    const pizza = !losers.has(p.player) ? "" : custom ? "🍕 would pay" : result ? "🍕 paid" : "🍕 pays now";
     return el("tr", {},
       el("td", {}, v == null ? "" : String(i + 1)),
       el("td", {}, el("span", { class: "player" }, swatch(p.player), p.player)),
-      el("td", {}, p.name ? `${p.name} ` : "", el("span", { class: "ticker" }, p.ticker)),
+      el("td", {}, p.name ? `${p.name} ` : "", el("span", { class: "ticker" }, p.ticker),
+        custom ? el("span", { class: "ticker" }, ` @ ${fmtEur.format(p.buy_eur)}`) : ""),
       el("td", { class: "num" }, v == null ? "–" : fmtEur.format(v)),
       el("td", { class: "num" }, v == null ? "–" : fmtPct.format(v / game.invested_eur - 1)),
       el("td", { class: "pizza" }, pizza));
@@ -232,7 +265,8 @@ const crosshair = {
 };
 
 function renderChart() {
-  const { game, prices } = current;
+  const { game, prices, factors } = current;
+  const scale = (player) => (view === "custom" ? factors.get(player) : 1);
   const start = parseDate(game.start).getTime();
   const end = parseDate(game.end).getTime() + 86400000;
   const grid = css("--grid");
@@ -243,7 +277,7 @@ function renderChart() {
     .map((p) => ({
       player: p.player,
       label: p.name ? `${p.player} · ${p.name}` : p.player,
-      data: prices.picks[p.player].series.map(([t, v]) => ({ x: Date.parse(t), y: v })),
+      data: prices.picks[p.player].series.map(([t, v]) => ({ x: Date.parse(t), y: v * scale(p.player) })),
       borderColor: seriesColor(p.player),
       backgroundColor: seriesColor(p.player),
       borderWidth: 2,
@@ -345,6 +379,10 @@ async function init() {
   const id = pickDefault();
   renderPicker(id);
   $("game").addEventListener("change", (e) => { location.hash = e.target.value; });
+  $("view-toggle").addEventListener("change", (e) => {
+    view = e.target.value;
+    if (current) renderGame();
+  });
   window.addEventListener("hashchange", () => {
     const id = pickDefault();
     $("game").value = id;
