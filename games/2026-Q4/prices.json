@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-08T08:38:42Z",
+ "updated": "2026-11-08T09:29:05Z",
  "picks": {
   "s": {
    "ticker": "TJX.F",
@@ -7,7 +7,8 @@
    "reference": {
     "date": "2026-09-30",
     "close": 117.0,
-    "eur_rate": 1.0
+    "eur_rate": 1.0,
+    "close_eur": 117.0
    },
    "dividends": [],
    "value": 52.3504,
@@ -328,7 +329,8 @@
    "reference": {
     "date": "2026-09-30",
     "close": 58.029998779296875,
-    "eur_rate": 1.0
+    "eur_rate": 1.0,
+    "close_eur": 58.029999
    },
    "dividends": [
     [
@@ -742,7 +744,8 @@
    "reference": {
     "date": "2026-09-30",
     "close": 44.91999816894531,
-    "eur_rate": 1.0
+    "eur_rate": 1.0,
+    "close_eur": 44.919998
    },
    "dividends": [],
    "value": 51.7253,
@@ -1179,7 +1182,8 @@
    "reference": {
     "date": "2026-09-30",
     "close": 330.8299865722656,
-    "eur_rate": 0.88067
+    "eur_rate": 0.88067,
+    "close_eur": 291.352044
    },
    "dividends": [
     [
@@ -1807,7 +1811,7 @@
     ],
     [
      "2026-10-30T19:30:00Z",
-     52.0368
+     52.0353
     ],
     [
      "2026-11-02T14:30:00Z",
