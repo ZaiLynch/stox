@@ -31,25 +31,25 @@
    "standings": [
     {
      "player": "j",
-     "value": 63.47
-    },
-    {
-     "player": "s",
-     "value": 52.35
+     "value": 63.3
     },
     {
      "player": "a",
-     "value": 51.73
+     "value": 54.1
     },
     {
      "player": "h",
-     "value": 51.67
+     "value": 52.82
+    },
+    {
+     "player": "s",
+     "value": 51.92
     }
    ],
    "last": [
-    "h"
+    "s"
    ],
-   "updated": "2026-11-08T09:29:05Z"
+   "updated": "2026-11-09T19:52:05Z"
   },
   {
    "id": "2026-Q3",
